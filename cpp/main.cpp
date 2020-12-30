@@ -9,8 +9,6 @@
 
 int main()
 {
-    std::cout << "hello world\n";
-
     /* Test 1 */
     // std::vector<int> s0{1,2,3,4,0,6,5,7,8};
     // std::vector<int> s1{1,2,3,4,6,0,5,7,8};

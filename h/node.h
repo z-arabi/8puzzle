@@ -20,7 +20,7 @@ class Node
         std::vector<int> puzzle;
         std::deque<Node> children{};
         std::string action{};
-        Node* parent{};
+        std::vector<Node> parent{};
         int ind0{};
 
         Node(){}
@@ -28,6 +28,8 @@ class Node
         {
             std::cout << "node constructor" << "\n";
             setValue(_puzzle);
+            // parent = new Node[1];
+            // parent[0] = {};
         }
         void setValue(std::vector<int> _puzzle)
         {
@@ -36,13 +38,16 @@ class Node
             {
                 this->puzzle.push_back(_puzzle[i]);
             }
+            std::cout << "end set value\n";
         }
         Node(const Node& node)
         {
             // std::cout <<"node copy constructor\n";
-            // parent = {};
-            delete[] parent;
-            parent = node.parent;
+            parent = {};
+            // delete[] parent;
+            // parent[0] = node.parent[0];
+            if(node.parent.size())
+                parent.push_back(node.parent[0]);
             children={};  
             puzzle={};          
             for(int i{};i<size;i++)
@@ -79,7 +84,11 @@ class Node
                 std::swap(mid_values[ind0+1],mid_values[ind0]);
                 std::string s = "move right";
                 Node child(mid_values);
-                child.parent = this; 
+                // child.parent = this; 
+                if(!child.parent.size())
+                    child.parent.push_back(*this);
+                else
+                    child.parent[0]=*this;    
                 child.action = s;
                 children.push_back(child);    
             }
@@ -93,7 +102,11 @@ class Node
                 std::swap(mid_values[ind0-1],mid_values[ind0]);
                 std::string s = "move left";
                 Node child(mid_values);
-                child.parent = this; 
+                // child.parent = this;
+                if(!child.parent.size())
+                    child.parent.push_back(*this);
+                else
+                    child.parent[0]=*this; 
                 child.action = s;
                 children.push_back(child);        
             }
@@ -107,7 +120,11 @@ class Node
                 std::swap(mid_values[ind0-col],mid_values[ind0]);
                 std::string s = "move up";
                 Node child(mid_values);
-                child.parent = this; 
+                // child.parent = this;
+                if(!child.parent.size())
+                    child.parent.push_back(*this);
+                else
+                    child.parent[0]=*this;
                 child.action = s;
                 children.push_back(child);    
             }
@@ -121,7 +138,11 @@ class Node
                 std::swap(mid_values[ind0+col],mid_values[ind0]);
                 std::string s = "move down";
                 Node child(mid_values);
-                child.parent = this; 
+                // child.parent = this; 
+                if(!child.parent.size())
+                    child.parent.push_back(*this);
+                else
+                    child.parent[0]=*this;
                 child.action = s;
                 children.push_back(child);             
             }
@@ -175,7 +196,7 @@ class Node
         }
         bool operator==(Node node)
         {
-            if(children==node.children && parent==node.parent && puzzle==node.puzzle)
+            if(children==node.children && puzzle==node.puzzle)
             {
                 return true;
             }

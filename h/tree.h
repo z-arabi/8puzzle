@@ -41,12 +41,15 @@ class Tree
             actions = {};
             Node current = n;
             path.push_front(current);
-            while(current.parent!=nullptr && current!=*(current.parent))
+            Node comp{};
+            while(current.parent.size()!=0 && current!=current.parent[0])
             {
-                Node cc = *(current.parent);
-                current = cc;
-                current.parent = {};
-                current.parent = cc.parent;
+                // Node cc = *(current.parent);
+                // current = cc;
+                // current.parent = {};
+                // current.parent = cc.parent;
+                // current = *(current.parent);
+                current = current.parent[0];
                 path.push_front(current);
             }
             std::cout << path.size() << "\n";
