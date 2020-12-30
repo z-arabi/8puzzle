@@ -23,10 +23,7 @@ class Node
         Node* parent{};
         int ind0{};
 
-        Node()
-        {
-
-        }
+        Node(){}
         Node(std::vector<int> _puzzle,std::string _action=""):action{_action}
         {
             std::cout << "node constructor" << "\n";
@@ -38,38 +35,31 @@ class Node
             for(int i{};i<size;i++)
             {
                 this->puzzle.push_back(_puzzle[i]);
-                // std::cout << puzzle[i] << " ";
             }
-            std::cout << puzzle.size() << "\n";
         }
         Node(const Node& node)
         {
-            std::cout <<"node copy constructor\n";
+            // std::cout <<"node copy constructor\n";
+            // parent = {};
+            delete[] parent;
             parent = node.parent;
-            children={};            
+            children={};  
+            puzzle={};          
             for(int i{};i<size;i++)
             {
                 puzzle.push_back(node.puzzle[i]);
-                // std::cout << puzzle[i] << " pp ";
             }
-            // std::cout << std::endl;
             for(size_t i{};i<children.size();i++)
             {
                 children.push_back(node.children[i]);
             }
-            // parent = new Node[1];
-            // parent[0] = *(node.parent);
             ind0 = node.ind0;
             col = node.col;
             size = node.size;
-            std::cout << parent << " p " << node.parent << std::endl;
+            action = node.action;
         }
-        ~Node()
-        {
-            // delete[] parent;
-        }
-        
-        bool Test(int* goalarray)
+        ~Node(){}
+        bool Test(std::vector<int> goalarray)
         {
             for(size_t i{};i<size;i++)
             {
@@ -139,7 +129,7 @@ class Node
         void show()
         {
             int m = 0;
-            std::cout << "\n+-------+\n";
+            std::cout << "+-------+\n";
             for(int i{};i<col;i++)
             {
                 std::cout << "| ";
@@ -175,7 +165,6 @@ class Node
                 if(puzzle[i]==0)
                 {
                     ind0 = i;
-                    // std::cout << "index of zero " << ind0 << "\n";
                     break;
                 }
             }
