@@ -8,6 +8,8 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(LXXFLAGS) -o $(TARGET) $(OBJECTS) $(GTEST)
 ./obj/midterm.o: ./cpp/midterm.cpp
 	$(CXX) $(CXXFLAGS) ./cpp/midterm.cpp -o ./obj/midterm.o
+./obj/node.o: ./cpp/node.cpp
+	$(CXX) $(CXXFLAGS) ./cpp/node.cpp -o ./obj/node.o
 ./obj/tree.o: ./cpp/tree.cpp
 	$(CXX) $(CXXFLAGS) ./cpp/tree.cpp -o ./obj/tree.o
 ./obj/bfs.o: ./cpp/bfs.cpp
