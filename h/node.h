@@ -8,7 +8,8 @@
 #include <vector>
 #include <algorithm>
 #include <string>
-
+#include <sstream>
+#include "color.h"
 
 class Node
 {
@@ -90,7 +91,7 @@ class Node
                 Node child(mid_values);
                 child.parent = this; 
                 child.action = s;
-                children.push_back(child);     
+                children.push_back(child);    
             }
         }
         void left(std::vector<int> _puzzle,int ind0)
@@ -137,18 +138,23 @@ class Node
         }
         void show()
         {
-            std::cout << "\n";
             int m = 0;
+            std::cout << "\n+-------+\n";
             for(int i{};i<col;i++)
             {
+                std::cout << "| ";
+                std::cout << LIGHTGRAY_B ;
                 for(int j{};j<col;j++)
                 {
-                    std::cout << puzzle[m] << " ";
+                    if( j == col-1)
+                        std::cout << BOLD << LIGHTMAGENTA << puzzle[m] << RESET;
+                    else
+                        std::cout << BOLD << LIGHTMAGENTA << puzzle[m] << " ";
                     m+=1;
                 }
-                std::cout << std::endl;
+                std::cout << " |" << std::endl;
             }
-            std::cout << "\n";
+            std::cout << "+-------+\n";
         }
         bool sameNode(std::vector<int> _puzzle)
         {
@@ -178,23 +184,22 @@ class Node
             up(puzzle,ind0);
             down(puzzle,ind0);
         }
-        // // bool operator==(Node node)
-        // // {
-        // //     if(children==node.children && parent==node.parent && puzzle==node.puzzle)
-        // //     {
-        // //         return true;
-        // //     }
-        // //     return false;
-        // // }
-        // // bool operator!=(Node node)
-        // // {
-        // //     if(children==node.children && parent==node.parent && puzzle==node.puzzle)
-        // //     {
-        // //         return false;
-        // //     }
-        // //     return true;
-        // // }
-
+        bool operator==(Node node)
+        {
+            if(children==node.children && parent==node.parent && puzzle==node.puzzle)
+            {
+                return true;
+            }
+            return false;
+        }
+        bool operator!=(Node node)
+        {
+            if(*this==node)
+            {
+                return false;
+            }
+            return true;
+        }
 };
 
 #endif

@@ -12,28 +12,24 @@ int main()
     std::cout << "hello world\n";
 
     /* Test 1 */
-    std::vector<int> s0{1,2,3,4,0,6,7,5,8};
-    std::vector<int> s1{1,2,3,4,6,0,7,5,8};
-    std::vector<int> s13{1,2,0,4,6,3,7,5,8};
+    std::vector<int> s0{1,2,3,4,0,6,5,7,8};
+    std::vector<int> s1{1,2,3,4,6,0,5,7,8};
+    std::vector<int> s13{1,2,0,4,6,3,5,7,8};
     Node root{s0};
-    Node child1{s1};
-    Node child13{s13};
     root.generate();
     for(auto i:root.children)
     {
         i.show();
     }
     root.children[0].parent->show();
-    // child1.parent = &root;
-    // Node child2 = child1;
-    // std::cout << child1.parent->puzzle[5] << std::endl;
-    // std::cout << child2.parent->puzzle[5] << std::endl;
-    // Node grandchild{s2};
-    // child1.children[0] = grandchild;
-    // grandchild.parent = &child1;
-    // std::cout << grandchild.parent->puzzle[3] << std::endl;
-    // std::cout << grandchild.parent->parent->puzzle[3] << std::endl;
-    
+    Node child1 = root.children[0];
+    child1.parent->show();
+    child1.generate();
+    Node child13 = child1.children[0];
+    child13.parent->show();
+    child13.parent->parent->show();
+    if( child13 != child1 )
+        std::cout << "NOTequal" << "\n";    
 
     // int* s0{new int[9]};
     // for(int i=0;i<9;i++)
