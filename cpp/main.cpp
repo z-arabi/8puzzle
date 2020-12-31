@@ -31,10 +31,10 @@ int main()
     //     std::cout << "NOTequal" << "\n";
 
     /* Test2 */
-    std::vector<int> s0{1,8,2,0,4,3,7,6,5};
-    Node root{s0};
-    BFS bfs{root};
-    std::deque<Node> solution = bfs.Solve();
+    // std::vector<int> s0{1,8,2,0,4,3,7,6,5};
+    // Node root{s0};
+    // BFS bfs{root};
+    // std::deque<Node> solution = bfs.Solve();
 
     /* Test3 */
     // std::vector<int> s0{1,2,4,3,0,5,7,6,8}; //odd inv doesn't have answer
@@ -47,6 +47,31 @@ int main()
     // Node root{s0};
     // BFS bfs{root};
     // std::deque<Node> solution = bfs.Solve();
+
+    /* Test5 */
+    // std::vector<int> s0{1,0,2,3,4,5,6,7,8};
+    // std::vector<int> goal{0,1,2,3,4,5,6,7,8};
+    // Node root{s0};
+    // BFS bfs{root,goal};
+    // std::deque<Node> solution = bfs.Solve();
+
+    /* Test6 */
+    // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
+    // std::vector<int> goal{2,0,4,1,8,5,7,3,6};
+    // Node root{s0};
+    // BFS bfs{root,goal};
+    // std::deque<Node> solution = bfs.Solve();
+
+    /* Test7 */
+    // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
+    // std::vector<int> goal{0,1,2,3,4,5,6,7,8};
+    // Node root{s0};
+    // BFS bfs{root,goal};
+    // std::deque<Node> solution = bfs.Solve();
+
+    
+
+
 
     return 0;
 }

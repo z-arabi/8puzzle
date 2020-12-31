@@ -17,46 +17,47 @@ std::deque<Node> BFS::Solve()
     bool findGoal = false;
     std::vector<int> goal{1,2,3,4,5,6,7,8,0};
 
-    if(root.Test(Tree::goalpuzzle))
+    if(Tree::root.Test(Tree::goalpuzzle))
     {
         std::cout << GREEN_B << "Primary State is Final State. Primary state is:" << RESET << "\n";
-        root.show();
+        Tree::root.show();
         return {Tree::root};
     }
-    else if(!isSolvable(root.puzzle,root.size) && goalpuzzle==goal)
+    else if(!isSolvable(Tree::root.puzzle,root.size) && Tree::goalpuzzle==goal)
     {
         std::cout << LIGHTCYAN_B << BOLD << RED << "it has no solution" << RESET << "\n";
     }
     else
     {
-        frontier.push_back(root);
-        while(frontier.size() > 0 && !findGoal)
+        Tree::frontier.push_back(Tree::root);
+        while(Tree::frontier.size() > 0 && !findGoal)
         {
             std::cout << "in while ..." << "\n";
-            Node currentNode = frontier.front();
-            explored.push_back(currentNode);
-            frontier.pop_front();
+            Node currentNode = Tree::frontier.front();
+            currentNode.show();
+            Tree::explored.push_back(currentNode);
+            Tree::frontier.pop_front();
             currentNode.generate();
             Node currentchild;
             
             for(size_t i{};i<currentNode.children.size();i++)
             {
                 currentchild = currentNode.children[i];
-                if(currentchild.Test(goalpuzzle))
+                if(currentchild.Test(Tree::goalpuzzle))
                 {
                     std::cout << "Goal found\n";
                     Tree::pathtrace(currentchild);
                     Tree::showPathInfo();
-                    return path;
+                    return Tree::path;
                 }
-                if(!Tree::contains(frontier,currentchild) || !Tree::contains(explored,currentchild))
+                if(!Tree::contains(Tree::frontier,currentchild) || !Tree::contains(Tree::explored,currentchild))
                 {
-                    frontier.push_back(currentchild);
+                    Tree::frontier.push_back(currentchild);
                 }
             }
 
         }         
     }
-    return path;
+    return Tree::path;
 }
 
