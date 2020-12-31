@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -I h -I /usr/local/include/gtest/ -c
 LXXFLAGS = -std=c++17 -Ih -pthread
-OBJECTS = ./obj/tree.o ./obj/bfs.o ./obj/dfs.o ./obj/midterm.o ./obj/main.o
+OBJECTS = ./obj/node.o ./obj/tree.o ./obj/bfs.o ./obj/dfs.o ./obj/midterm.o ./obj/main.o
 TARGET = main
 
 $(TARGET): $(OBJECTS)
