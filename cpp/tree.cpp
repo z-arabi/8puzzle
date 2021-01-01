@@ -6,13 +6,6 @@
 bool Tree::contains(std::vector<std::shared_ptr<Node>> l,Node c)
 {
     std::vector<std::shared_ptr<Node>>::iterator ptr;
-    // for(size_t i = 0;i<l.size();i++)
-    // {
-    //     if(l[i].puzzle==c.puzzle)
-    //     {
-    //         return true;
-    //     }
-    // }
     for (ptr = l.begin(); ptr < l.end(); ptr++) 
     {
         if((*ptr)->puzzle == c.puzzle)
@@ -28,8 +21,7 @@ int Tree::getInvCount(std::vector<int> p,int _s)
     for (int i = 0; i < s-1; i++) 
         for (int j = i+1; j < s; j++)
             if (p[j] && p[i] &&  p[i] > p[j]) 
-                inv_count++; 
-    // std::cout << inv_count << "\n";
+                inv_count++;
     return inv_count; 
 } 
 

@@ -44,16 +44,22 @@ int main()
     // std::deque<Node> solution = bfs.Solve();
 
     /* inversion20 - solvable - bfs can't */
-    std::vector<int> s0{8,5,6,4,2,1,0,7,3};
-    Node root{s0};
-    BFS bfs{root};
-    std::deque<std::shared_ptr<Node>> solution = bfs.Solve();
+    // std::vector<int> s0{8,5,6,4,2,1,0,7,3};
+    // Node root{s0};
+    // BFS bfs{root};
+    // std::deque<std::shared_ptr<Node>> solution = bfs.Solve();
 
-    /* inversion2 - solvable - depth*/
+    /* inversion2 - solvable - bfs can't*/
     // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
     // Node root{s0};
     // BFS bfs{root};
-    // std::deque<Node> solution = bfs.Solve();
+    // std::deque<std::shared_ptr<Node>> solution = bfs.Solve();
+
+    /* solvable - bfs can't*/
+    std::vector<int> s0{8,7,4,6,5,1,3,0,2};
+    Node root{s0};
+    BFS bfs{root};
+    std::deque<std::shared_ptr<Node>> solution = bfs.Solve();
 
     /* Test4 */
     // std::vector<int> s0{1,2,3,4,5,6,7,8,0};
