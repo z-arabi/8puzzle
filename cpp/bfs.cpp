@@ -2,12 +2,12 @@
 
 BFS::BFS(Node _root,std::vector<int> _goalpuzzle)
 {
-    // std::cout << "bfs constructor" << "\n";
+    std::cout << "bfs constructor" << "\n";
     Tree::root=_root;
     Tree::goalpuzzle=_goalpuzzle;
 }
 
-std::deque<Node> BFS::Solve()
+std::deque<std::shared_ptr<Node>> BFS::Solve()
 {
     Tree::path={};
     Tree::actions={};
@@ -21,7 +21,7 @@ std::deque<Node> BFS::Solve()
     {
         std::cout << GREEN_B << "Primary State is Final State. Primary state is:" << RESET << "\n";
         Tree::root.show();
-        return {Tree::root};
+        return {};
     }
     else if(!Tree::isSolvable(Tree::root.puzzle,root.size) && Tree::goalpuzzle==goal)
     {
@@ -29,31 +29,35 @@ std::deque<Node> BFS::Solve()
     }
     else
     {
-        Tree::frontier.push_back(Tree::root);
+        Tree::frontier.push_back(std::make_shared<Node>(root));
         while(Tree::frontier.size() > 0 && !findGoal)
         {
             // std::cout << "in while ..." << "\n";
-            Node currentNode = Tree::frontier.front();
-            // currentNode.show();
+            std::shared_ptr<Node> currentNode = Tree::frontier.front();
+            currentNode->show();
             Tree::explored.push_back(currentNode);
-            Tree::frontier.pop_front();
-            currentNode.generate();
-            Node currentchild;
+            // Tree::frontier.pop_front();
+            Tree::frontier.erase(Tree::frontier.begin());
+            currentNode->generate();
+            std::shared_ptr<Node> currentchild;
             
-            for(size_t i{};i<currentNode.children.size();i++)
+            for(size_t i{};i<currentNode->children.size();i++)
             {
-                currentchild = currentNode.children[i];
-                if(currentchild.Test(Tree::goalpuzzle))
+                currentchild = currentNode->children[i];
+                std::cout << "check\n";
+                if(currentchild->Test(Tree::goalpuzzle))
                 {
                     std::cout << "Goal found\n";
-                    Tree::pathtrace(currentchild);
+                    Tree::pathtrace(*currentchild);
                     Tree::showPathInfo();
                     return Tree::path;
                 }
-                if(!(Tree::contains(Tree::frontier,currentchild) || Tree::contains(Tree::explored,currentchild)))
+                
+                if(!(Tree::contains(Tree::frontier,*currentchild) || Tree::contains(Tree::explored,*currentchild)))
                 {
                     Tree::frontier.push_back(currentchild);
                 }
+                
             }
         }         
     }

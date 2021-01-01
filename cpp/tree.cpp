@@ -1,18 +1,23 @@
 #include "tree.h"
+#include "color.h"
+#include<iterator> // for iterators 
+#include<vector> // for vectors 
 
-bool Tree::contains(std::deque<Node> l,Node c)
+bool Tree::contains(std::vector<std::shared_ptr<Node>> l,Node c)
 {
-    // std::cout << "contains..." << l.size() << "\n";
-    for(size_t i = 0;i<l.size();i++)
+    std::vector<std::shared_ptr<Node>>::iterator ptr;
+    // for(size_t i = 0;i<l.size();i++)
+    // {
+    //     if(l[i].puzzle==c.puzzle)
+    //     {
+    //         return true;
+    //     }
+    // }
+    for (ptr = l.begin(); ptr < l.end(); ptr++) 
     {
-        // l[i].show();
-        if(l[i].puzzle==c.puzzle)
-        {
-            // std::cout << "equal\n";
+        if((*ptr)->puzzle == c.puzzle)
             return true;
-        }
     }
-    // std::cout << "contains finished\n";
     return false;
 }
 
@@ -37,18 +42,19 @@ bool Tree::isSolvable(std::vector<int> _puzzle,int _s)
 
 void Tree::pathtrace(Node n)
 {
-    std::cout << "tracing path...\n";
+    // std::cout << "tracing path...\n";
     path = {};
     actions = {};
-    Node current = n;
+    // std::shared_ptr<Node> current(new Node);
+    auto current = std::make_shared<Node>(&n);
     path.push_front(current);
     Node comp{};
-    while(current.parent.size()!=0)
+    while(current->parent.size()!=0)
     {
-        current = current.parent[0];
+        current = current->parent[0];
         path.push_front(current);
     }
-    std::cout << path.size() << "\n";
+    std::cout << GREEN << "The Depth is..." << path.size() << RESET << "\n";
 }
 
 void Tree::showPathInfo()
@@ -58,8 +64,8 @@ void Tree::showPathInfo()
         if(i==0)
             std::cout << "+++++++++\n" << MAGENTA << "starting..." << RESET << "\n";
         else
-            std::cout << MAGENTA << path[i].action << " =>" << RESET << "\n";
-        path[i].show();
+            std::cout << MAGENTA << path[i]->action << " =>" << RESET << "\n";
+        path[i]->show();
     }
 }
 

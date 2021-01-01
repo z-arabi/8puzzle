@@ -35,7 +35,7 @@ int main()
     // std::vector<int> s0{1,8,2,0,4,3,7,6,5};
     // Node root{s0};
     // BFS bfs{root};
-    // std::deque<Node> solution = bfs.Solve();
+    // std::deque<std::shared_ptr<Node>> solution = bfs.Solve();
 
     /* inversion19 - notsolvable*/
     // std::vector<int> s0{8,5,6,4,2,1,0,3,7};
@@ -44,10 +44,10 @@ int main()
     // std::deque<Node> solution = bfs.Solve();
 
     /* inversion20 - solvable - bfs can't */
-    // std::vector<int> s0{8,5,6,4,2,1,0,7,3};
-    // Node root{s0};
-    // BFS bfs{root};
-    // std::deque<Node> solution = bfs.Solve();
+    std::vector<int> s0{8,5,6,4,2,1,0,7,3};
+    Node root{s0};
+    BFS bfs{root};
+    std::deque<std::shared_ptr<Node>> solution = bfs.Solve();
 
     /* inversion2 - solvable - depth*/
     // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
@@ -103,10 +103,10 @@ int main()
 
     /* Test9 */
     // std::vector<int> s0{8,5,6,4,2,1,0,7,3};
-    std::vector<int> s0{1,2,4,3,0,5,7,6,8};
-    Node root{s0};
-    A astar{root};
-    std::deque<Node> solution = astar.Solve();
+    // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
+    // Node root{s0};
+    // A astar{root};
+    // std::deque<Node> solution = astar.Solve();
 
     return 0;
 }

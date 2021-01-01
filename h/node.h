@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include "color.h"
+#include <memory>
 
 class Node
 {
@@ -13,9 +14,9 @@ class Node
         int col{3};
         int size{col*col};
         std::vector<int> puzzle;
-        std::deque<Node> children{};
+        std::vector<std::shared_ptr<Node>> children{};
         std::string action{};
-        std::vector<Node> parent{};
+        std::vector<std::shared_ptr<Node>> parent{};
         int ind0{};
         int heuristic{};
 
@@ -23,6 +24,7 @@ class Node
         Node(std::vector<int> _puzzle,std::string _action="");
         void setValue(std::vector<int> _puzzle);
         Node(const Node& node);
+        Node(const Node* node);
         ~Node(){}
         bool Test(std::vector<int> goalarray={1,2,3,4,5,6,7,8,0});
         void right(std::vector<int> _puzzle,int ind0);

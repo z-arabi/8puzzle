@@ -39,10 +39,35 @@ Node::Node(const Node& node)
     heuristic = node.heuristic;
 }
 
-bool Node::Test(std::vector<int> goalarray)
+Node::Node(const Node* node)
 {
+    parent = {};
+    if(node->parent.size())
+        parent.push_back(node->parent[0]);
+    children={};  
+    puzzle={};          
     for(int i{};i<size;i++)
     {
+        puzzle.push_back(node->puzzle[i]);
+    }
+    for(size_t i{};i<children.size();i++)
+    {
+        children.push_back(node->children[i]);
+    }
+    ind0 = node->ind0;
+    col = node->col;
+    size = node->size;
+    action = node->action;
+    heuristic = node->heuristic;
+
+}
+
+bool Node::Test(std::vector<int> goalarray)
+{
+    std::cout << "in test " << puzzle[2] << " " << goalarray[1] << "\n";
+    for(int i{};i<size;i++)
+    {
+        std::cout << puzzle[i] << " * " << goalarray[i] << "\n";
         if(puzzle[i] != goalarray[i])
         {
             return false;
@@ -59,13 +84,14 @@ void Node::right(std::vector<int> _puzzle,int ind0)
         std::vector<int> mid_values = _puzzle;
         std::swap(mid_values[ind0+1],mid_values[ind0]);
         std::string s = "move right";
-        Node child(mid_values);
-        if(!child.parent.size())
-            child.parent.push_back(*this);
+        Node childd(mid_values);
+        auto child = std::make_shared<Node>(childd);
+        if(!child->parent.size())
+            child->parent.push_back(std::make_shared<Node>(this));
         else
-            child.parent[0]=*this;    
-        child.action = s;
-        children.push_back(child);    
+            child->parent[0]=std::make_shared<Node>(this);    
+        child->action = s;
+        children.push_back(child);
     }
 }
 
@@ -77,12 +103,13 @@ void Node::left(std::vector<int> _puzzle,int ind0)
         std::vector<int> mid_values = _puzzle;
         std::swap(mid_values[ind0-1],mid_values[ind0]);
         std::string s = "move left";
-        Node child(mid_values);
-        if(!child.parent.size())
-            child.parent.push_back(*this);
+        Node childd(mid_values);
+        auto child = std::make_shared<Node>(childd);
+        if(!child->parent.size())
+            child->parent.push_back(std::make_shared<Node>(this));
         else
-            child.parent[0]=*this; 
-        child.action = s;
+            child->parent[0]=std::make_shared<Node>(this); 
+        child->action = s;
         children.push_back(child);        
     }
 }
@@ -95,13 +122,14 @@ void Node::up(std::vector<int> _puzzle,int ind0)
         std::vector<int> mid_values = _puzzle;
         std::swap(mid_values[ind0-col],mid_values[ind0]);
         std::string s = "move up";
-        Node child(mid_values);
-        if(!child.parent.size())
-            child.parent.push_back(*this);
+        Node childd(mid_values);
+        auto child = std::make_shared<Node>(childd);
+        if(!child->parent.size())
+            child->parent.push_back(std::make_shared<Node>(*this));
         else
-            child.parent[0]=*this;
-        child.action = s;
-        children.push_back(child);    
+            child->parent[0]=std::make_shared<Node>(this); 
+        child->action = s;
+        children.push_back(child);   
     }
 }
 
@@ -113,12 +141,13 @@ void Node::down(std::vector<int> _puzzle,int ind0)
         std::vector<int> mid_values = _puzzle;
         std::swap(mid_values[ind0+col],mid_values[ind0]);
         std::string s = "move down";
-        Node child(mid_values);
-        if(!child.parent.size())
-            child.parent.push_back(*this);
+        Node childd(mid_values);
+        auto child = std::make_shared<Node>(childd);
+        if(!child->parent.size())
+            child->parent.push_back(std::make_shared<Node>(this));
         else
-            child.parent[0]=*this;
-        child.action = s;
+            child->parent[0]=std::make_shared<Node>(this); 
+        child->action = s;
         children.push_back(child);             
     }
 }
@@ -178,7 +207,7 @@ bool Node::operator==(Node node)
     if(puzzle==node.puzzle)
     {
         if(parent.size() && node.parent.size())
-            if(parent[0].puzzle == node.parent[0].puzzle)
+            if(parent[0]->puzzle == node.parent[0]->puzzle)
                 return true;                
     }
     return false;
