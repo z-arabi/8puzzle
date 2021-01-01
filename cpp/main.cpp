@@ -6,6 +6,7 @@
 #include "node.h"
 #include <vector>
 #include <string>
+#include "A.h"
 
 int main()
 {
@@ -30,14 +31,26 @@ int main()
     // if( child13 != child1 )
     //     std::cout << "NOTequal" << "\n";
 
-    /* Test2 */
+    /* Test 2 - inversion10 - solvable - depth10 - seconds*/
     // std::vector<int> s0{1,8,2,0,4,3,7,6,5};
     // Node root{s0};
     // BFS bfs{root};
     // std::deque<Node> solution = bfs.Solve();
 
-    /* Test3 */
-    // std::vector<int> s0{1,2,4,3,0,5,7,6,8}; //odd inv doesn't have answer
+    /* inversion19 - notsolvable*/
+    // std::vector<int> s0{8,5,6,4,2,1,0,3,7};
+    // Node root{s0};
+    // BFS bfs{root};
+    // std::deque<Node> solution = bfs.Solve();
+
+    /* inversion20 - solvable - bfs can't */
+    // std::vector<int> s0{8,5,6,4,2,1,0,7,3};
+    // Node root{s0};
+    // BFS bfs{root};
+    // std::deque<Node> solution = bfs.Solve();
+
+    /* inversion2 - solvable - depth*/
+    // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
     // Node root{s0};
     // BFS bfs{root};
     // std::deque<Node> solution = bfs.Solve();
@@ -69,9 +82,19 @@ int main()
     // BFS bfs{root,goal};
     // std::deque<Node> solution = bfs.Solve();
 
-    
+     
 
+    /* Test8 */
+    // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
+    // Node root{s0};
+    // DFS dfs{root,12};
+    // std::deque<Node> solution = dfs.Solve();
 
+    // std::vector<int> s0{8,5,6,4,2,1,0,7,3};
+    // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
+    // Node root{s0};
+    // A astar{root};
+    // std::deque<Node> solution = astar.Solve();
 
     return 0;
 }

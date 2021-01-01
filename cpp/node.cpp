@@ -36,6 +36,7 @@ Node::Node(const Node& node)
     col = node.col;
     size = node.size;
     action = node.action;
+    heuristic = node.heuristic;
 }
 
 bool Node::Test(std::vector<int> goalarray)
@@ -190,4 +191,17 @@ bool Node::operator!=(Node node)
         return false;
     }
     return true;
+}
+
+int Node::findHeu(std::vector<int> goalarray)
+{
+    heuristic=0;
+    for(int i{};i<size;i++)
+    {
+        if(puzzle[i] != goalarray[i])
+        {
+            heuristic++;
+        }
+    }
+    return heuristic;
 }

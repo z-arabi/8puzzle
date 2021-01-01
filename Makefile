@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -I h -I /usr/local/include/gtest/ -c
 LXXFLAGS = -std=c++17 -Ih -pthread
-OBJECTS = ./obj/node.o ./obj/tree.o ./obj/bfs.o ./obj/dfs.o ./obj/midterm.o ./obj/main.o
+OBJECTS = ./obj/node.o ./obj/tree.o ./obj/bfs.o ./obj/dfs.o ./obj/A.o ./obj/midterm.o ./obj/main.o
 TARGET = main
 
 $(TARGET): $(OBJECTS)
@@ -16,6 +16,8 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) ./cpp/bfs.cpp -o ./obj/bfs.o
 ./obj/dfs.o: ./cpp/dfs.cpp
 	$(CXX) $(CXXFLAGS) ./cpp/dfs.cpp -o ./obj/dfs.o
+./obj/A.o: ./cpp/A.cpp
+	$(CXX) $(CXXFLAGS) ./cpp/A.cpp -o ./obj/A.o
 ./obj/main.o: ./cpp/main.cpp
 	$(CXX) $(CXXFLAGS) ./cpp/main.cpp -o ./obj/main.o
 clean:

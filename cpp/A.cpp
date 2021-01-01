@@ -1,13 +1,13 @@
-#include "bfs.h"
+#include "A.h"
+#include <iterator>
 
-BFS::BFS(Node _root,std::vector<int> _goalpuzzle)
+A::A(Node _root,std::vector<int> _goalpuzzle)
 {
-    // std::cout << "bfs constructor" << "\n";
     Tree::root=_root;
     Tree::goalpuzzle=_goalpuzzle;
 }
 
-std::deque<Node> BFS::Solve()
+std::deque<Node> A::Solve()
 {
     Tree::path={};
     Tree::actions={};
@@ -29,19 +29,40 @@ std::deque<Node> BFS::Solve()
     }
     else
     {
+        Tree::root.findHeu();
         Tree::frontier.push_back(Tree::root);
-        while(Tree::frontier.size() > 0 && !findGoal)
-        {
+        std::cout << root.heuristic << "\n";
+        while(Tree::frontier.size() > 0)
+        { 
             std::cout << "in while ..." << "\n";
-            Node currentNode = Tree::frontier.front();
+            Node currentNode = frontier[0];
+            int min = frontier[0].heuristic;
+            // int ind{0};
+            std::deque<Node>::iterator i;
+            std::deque<Node>::iterator ind; 
+            i = frontier.begin();
+            ind = i;
+            std::cout << "***" << "\n"; 
+            while (i != frontier.end()) 
+            { 
+                if (min > i->heuristic)
+                {
+                    std::cout << "changing...\n";
+                    min = i->heuristic;
+                    currentNode = *i;
+                    ind = i;
+                }   
+                i++;         
+            }
+            Tree::frontier.erase(ind);
             currentNode.show();
             Tree::explored.push_back(currentNode);
-            Tree::frontier.pop_front();
+            // Tree::frontier.erase(ind);
             currentNode.generate();
             Node currentchild;
-            
             for(size_t i{};i<currentNode.children.size();i++)
             {
+                currentNode.children[i].findHeu();
                 currentchild = currentNode.children[i];
                 if(currentchild.Test(Tree::goalpuzzle))
                 {
@@ -50,6 +71,19 @@ std::deque<Node> BFS::Solve()
                     Tree::showPathInfo();
                     return Tree::path;
                 }
+                // bool f=0;
+                // bool e = 0;
+                // if(Tree::contains(Tree::frontier,currentchild))
+                // {
+                //     f = 1;
+
+
+                // }
+                // if(Tree::contains(Tree::explored,currentchild))
+                // {
+                //     /* check the heu of previous ones */
+                //     Tree::frontier.push_back(currentchild);
+                // }
                 if(!(Tree::contains(Tree::frontier,currentchild) || Tree::contains(Tree::explored,currentchild)))
                 {
                     Tree::frontier.push_back(currentchild);
@@ -59,4 +93,4 @@ std::deque<Node> BFS::Solve()
     }
     return Tree::path;
 }
-
+    

@@ -6,7 +6,7 @@
 
 class Tree
 {
-    protected:
+    public:
         Node root;
         std::deque<Node> path{};
         std::deque<Node> frontier{};
