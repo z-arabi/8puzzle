@@ -88,12 +88,12 @@ int main()
     // BFS bfs{root};
     // std::deque<Node> solution = bfs.Solve();
 
-    /* Test5 */
-    std::vector<int> s0{1,0,2,3,4,5,6,7,8};
-    std::vector<int> goal{0,1,2,3,4,5,6,7,8};
-    Node root{s0};
-    BFS bfs{root,goal};
-    std::deque<Node> solution = bfs.Solve();
+    // /* Test5 */
+    // std::vector<int> s0{1,0,2,3,4,5,6,7,8};
+    // std::vector<int> goal{0,1,2,3,4,5,6,7,8};
+    // Node root{s0};
+    // BFS bfs{root,goal};
+    // std::deque<Node> solution = bfs.Solve();
 
     /* Test8 */
     // std::vector<int> s0{1,2,3,4,5,6,7,0,8};
@@ -103,10 +103,10 @@ int main()
 
     /* Test9 */
     // std::vector<int> s0{8,5,6,4,2,1,0,7,3};
-    // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
-    // Node root{s0};
-    // A astar{root};
-    // std::deque<Node> solution = astar.Solve();
+    std::vector<int> s0{1,2,4,3,0,5,7,6,8};
+    Node root{s0};
+    A astar{root};
+    std::deque<Node> solution = astar.Solve();
 
     return 0;
 }

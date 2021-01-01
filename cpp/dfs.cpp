@@ -20,30 +20,25 @@ std::deque<Node> DFS::Solve()
         Tree::frontier={};
         Tree::explored={};
         depth={};
-        if(Tree::root.Test(Tree::goalpuzzle))
-        {
-            std::cout << "Goal found\n";
-            Tree::pathtrace(Tree::root);
-            Tree::showPathInfo();
+        Tree::frontier.push_front(Tree::root);
+        bool result = DFS::recDLS(Tree::root,limit,depth);
+        if(result)
             return Tree::path;
-        }else
-        {
-            // Tree::frontier.push_front(Tree::root);
-            // Node currentNode = Tree::frontier.front();
-            // currentNode.show();
-            Tree::explored.push_back(Tree::root);
-            // Tree::frontier.pop_front();
-            bool result = DFS::recDLS(Tree::root,limit,depth);
-            if(result)
-                return Tree::path;
-        }        
     }
     return {};
 }
 
 bool DFS::recDLS(Node node,int l,int d)
 {
-    if(limit<=0)
+    std::cout << "limit is " << limit << "\n";
+    if(node.Test(Tree::goalpuzzle))
+    {
+        std::cout << "Goal found\n";
+        Tree::pathtrace(node);
+        Tree::showPathInfo();
+        return true;
+    }
+    else if(limit<=0)
     {
         std::cout << BOLD << "cut-off occured" << RESET << "\n";    
         return false;
@@ -55,56 +50,27 @@ bool DFS::recDLS(Node node,int l,int d)
     }
     else
     {
-        // std::cout << "in recurssion\n";
-        // Node currentNode = Tree::frontier.front();
-        // currentNode.show();
-        // Tree::explored.push_back(currentNode);
-        // Tree::frontier.pop_front();
-        node.generate();
-        for(size_t i{};i<node.children.size();i++)
+        Node currentNode = Tree::frontier.front();
+        Tree::explored.push_back(currentNode);
+        Tree::frontier.pop_front();
+        currentNode.generate();
+        for(size_t i{};i<currentNode.children.size();i++)
         {
-            // currentNode.children[i].show();
-            Node currentchild = node.children[i];
-            if(currentchild.Test(Tree::goalpuzzle))
+            Node currentchild = currentNode.children[i];
+            if(!Tree::contains(Tree::frontier,currentchild) && !Tree::contains(Tree::explored,currentchild))
             {
-                std::cout << "Goal found\n";
-                Tree::pathtrace(Tree::root);
-                Tree::showPathInfo();
-                return true;
-            }else
-            {
-                if(!Tree::contains(Tree::frontier,currentchild) && !Tree::contains(Tree::explored,currentchild))
-                {
-                    // std::cout << "frontier size " << Tree::frontier.size() << "\n";
-                    // std::cout << "explored size " << Tree::explored.size() << "\n";
-                    // node.children[i].show();
-                    Tree::frontier.push_front(currentchild);
-                }
+                Tree::frontier.push_front(currentchild);
             }
         }
-        for(size_t i{};i<node.children.size();i++)
+        for(size_t i{};i<currentNode.children.size();i++)
         {
-            // Node currentchild = currentNode.children[currentNode.children.size()-i-1];
-            Node currentNode = Tree::frontier.front();
-            // currentNode.show();
-            Tree::explored.push_back(currentNode);
-            Tree::frontier.pop_front();
-            bool outcome = DFS::recDLS(currentNode.children[i],limit--,depth++);
+            Node currentchild = currentNode.children[currentNode.children.size()-i-1];
+            bool outcome = DFS::recDLS(currentchild,limit--,depth++);
             if(outcome)
             {
                 return true;
             }   
         }
-        // std::cout << "print childrens ends " << frontier.size() << "\n";
-        // for(size_t i{};i<currentNode.children.size();i++)
-        // {
-        //     Node currentchild = currentNode.children[i];
-        //     // Node currentchild = frontier[i];
-        //     // limit --;
-        //     // depth ++;
-           
-        // }
     }
     return false;
 }
-
