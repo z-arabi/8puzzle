@@ -14,7 +14,6 @@ std::deque<Node> A::Solve()
     Tree::frontier={};
     Tree::explored={};
 
-    bool findGoal = false;
     std::vector<int> goal{1,2,3,4,5,6,7,8,0};
 
     if(Tree::root.Test(Tree::goalpuzzle))
@@ -31,10 +30,10 @@ std::deque<Node> A::Solve()
     {
         Tree::root.findHeu();
         Tree::frontier.push_back(Tree::root);
-        std::cout << root.heuristic << "\n";
+        // std::cout << root.heuristic << "\n";
         while(Tree::frontier.size() > 0)
         { 
-            std::cout << "in while ..." << "\n";
+            // std::cout << "in while ..." << "\n";
             Node currentNode = frontier[0];
             int min = frontier[0].heuristic;
             // int ind{0};
@@ -42,12 +41,11 @@ std::deque<Node> A::Solve()
             std::deque<Node>::iterator ind; 
             i = frontier.begin();
             ind = i;
-            std::cout << "***" << "\n"; 
             while (i != frontier.end()) 
             { 
                 if (min > i->heuristic)
                 {
-                    std::cout << "changing...\n";
+                    // std::cout << "changing...\n";
                     min = i->heuristic;
                     currentNode = *i;
                     ind = i;
@@ -55,7 +53,7 @@ std::deque<Node> A::Solve()
                 i++;         
             }
             Tree::frontier.erase(ind);
-            currentNode.show();
+            // currentNode.show();
             Tree::explored.push_back(currentNode);
             // Tree::frontier.erase(ind);
             currentNode.generate();
@@ -76,8 +74,6 @@ std::deque<Node> A::Solve()
                 // if(Tree::contains(Tree::frontier,currentchild))
                 // {
                 //     f = 1;
-
-
                 // }
                 // if(Tree::contains(Tree::explored,currentchild))
                 // {

@@ -32,9 +32,9 @@ std::deque<Node> BFS::Solve()
         Tree::frontier.push_back(Tree::root);
         while(Tree::frontier.size() > 0 && !findGoal)
         {
-            std::cout << "in while ..." << "\n";
+            // std::cout << "in while ..." << "\n";
             Node currentNode = Tree::frontier.front();
-            currentNode.show();
+            // currentNode.show();
             Tree::explored.push_back(currentNode);
             Tree::frontier.pop_front();
             currentNode.generate();

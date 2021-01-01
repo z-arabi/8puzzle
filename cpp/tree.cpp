@@ -2,7 +2,7 @@
 
 bool Tree::contains(std::deque<Node> l,Node c)
 {
-    std::cout << "contains..." << l.size() << "\n";
+    // std::cout << "contains..." << l.size() << "\n";
     for(size_t i = 0;i<l.size();i++)
     {
         // l[i].show();
@@ -24,14 +24,14 @@ int Tree::getInvCount(std::vector<int> p,int _s)
         for (int j = i+1; j < s; j++)
             if (p[j] && p[i] &&  p[i] > p[j]) 
                 inv_count++; 
-    std::cout << inv_count << "\n";
+    // std::cout << inv_count << "\n";
     return inv_count; 
 } 
 
 bool Tree::isSolvable(std::vector<int> _puzzle,int _s) 
 {
     int invCount = getInvCount(_puzzle,_s);
-    std::cout << invCount << "\n";
+    // std::cout << invCount << "\n";
     return (invCount%2 == 0); 
 }
 

@@ -82,14 +82,26 @@ int main()
     // BFS bfs{root,goal};
     // std::deque<Node> solution = bfs.Solve();
 
-     
+    /* Test 2 - inversion10 - solvable - depth10 - seconds*/
+    // std::vector<int> s0{1,8,2,0,4,3,7,6,5};
+    // Node root{s0};
+    // BFS bfs{root};
+    // std::deque<Node> solution = bfs.Solve();
+
+    /* Test5 */
+    std::vector<int> s0{1,0,2,3,4,5,6,7,8};
+    std::vector<int> goal{0,1,2,3,4,5,6,7,8};
+    Node root{s0};
+    BFS bfs{root,goal};
+    std::deque<Node> solution = bfs.Solve();
 
     /* Test8 */
-    // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
+    // std::vector<int> s0{1,2,3,4,5,6,7,0,8};
     // Node root{s0};
-    // DFS dfs{root,12};
+    // DFS dfs{root,5};
     // std::deque<Node> solution = dfs.Solve();
 
+    /* Test9 */
     // std::vector<int> s0{8,5,6,4,2,1,0,7,3};
     // std::vector<int> s0{1,2,4,3,0,5,7,6,8};
     // Node root{s0};
@@ -98,3 +110,4 @@ int main()
 
     return 0;
 }
+
