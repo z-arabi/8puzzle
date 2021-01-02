@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -I h -I /usr/local/include/gtest/ -c
+CXXFLAGS = -std=c++17 -Wall -I h -I /usr/local/include/gtest/ -c -Ofast
 LXXFLAGS = -std=c++17 -Ih -pthread
 OBJECTS = ./obj/node.o ./obj/tree.o ./obj/bfs.o ./obj/dfs.o ./obj/A.o ./obj/midterm.o ./obj/main.o
 TARGET = main

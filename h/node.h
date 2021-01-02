@@ -11,8 +11,6 @@
 class Node
 {
     public:
-        int col{3};
-        int size{col*col};
         std::vector<int> puzzle;
         std::vector<std::shared_ptr<Node>> children{};
         std::string action{};
@@ -32,11 +30,16 @@ class Node
         void up(std::vector<int> _puzzle,int ind0);
         void down(std::vector<int> _puzzle,int ind0);
         void show();
-        bool sameNode(std::vector<int> _puzzle);
         void generate();
         bool operator==(Node node);
         bool operator!=(Node node);
         int findHeu(std::vector<int> goalarray={1,2,3,4,5,6,7,8,0});
+
+        int setid(std::vector<int> p){
+            int c = (p[0]*100000000)+(p[1]*10000000)+(p[2]*1000000)+(p[3]*100000)+(p[4]*10000)+(p[5]*1000)+(p[6]*100)+(p[7]*10)+p[8];
+            return c;
+        }
+        int id{};
 };
 
 #endif

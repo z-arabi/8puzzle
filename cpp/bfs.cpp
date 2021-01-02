@@ -3,64 +3,65 @@
 BFS::BFS(Node _root,std::vector<int> _goalpuzzle)
 {
     std::cout << "bfs constructor" << "\n";
-    Tree::root=_root;
-    Tree::goalpuzzle=_goalpuzzle;
+    root=_root;
+    goalpuzzle=_goalpuzzle;
 }
 
-std::deque<std::shared_ptr<Node>> BFS::Solve()
+std::vector<std::shared_ptr<Node>> BFS::Solve()
 {
-    Tree::path={};
-    Tree::actions={};
-    Tree::frontier={};
-    Tree::explored={};
+    path={};
+    actions={};
+    frontier={};
 
     bool findGoal = false;
     std::vector<int> goal{1,2,3,4,5,6,7,8,0};
 
-    if(Tree::root.Test(Tree::goalpuzzle))
+    if(root.Test(goalpuzzle))
     {
         std::cout << GREEN_B << "Primary State is Final State. Primary state is:" << RESET << "\n";
-        Tree::root.show();
+        root.show();
         return {};
     }
-    else if(!Tree::isSolvable(Tree::root.puzzle,root.size) && Tree::goalpuzzle==goal)
+    else if(!isSolvable(root.puzzle) && goalpuzzle==goal)
     {
         std::cout << LIGHTCYAN_B << BOLD << RED << "it has no solution" << RESET << "\n";
     }
     else
     {
-        Tree::frontier.push_back(std::make_shared<Node>(root));
-        while(Tree::frontier.size() > 0 && !findGoal)
+        frontier.push_back(std::make_shared<Node>(root));
+        nfrontier.push_back(root.id);
+        while(frontier.size() > 0 && !findGoal)
         {
-            // std::cout << "in while ..." << "\n";
-            std::shared_ptr<Node> currentNode = Tree::frontier.front();
-            currentNode->show();
-            Tree::explored.push_back(currentNode);
-            // Tree::frontier.pop_front();
-            Tree::frontier.erase(Tree::frontier.begin());
+            std::shared_ptr<Node> currentNode = frontier.front();
+            int out = nfrontier.front();
+            nexplored.push_back(out);
+            frontier.erase(frontier.begin());
+            nfrontier.erase(nfrontier.begin());
             currentNode->generate();
             std::shared_ptr<Node> currentchild;
             
             for(size_t i{};i<currentNode->children.size();i++)
             {
                 currentchild = currentNode->children[i];
-                std::cout << "check\n";
-                if(currentchild->Test(Tree::goalpuzzle))
+                if(currentchild->Test(goalpuzzle))
                 {
                     std::cout << "Goal found\n";
-                    Tree::pathtrace(*currentchild);
-                    Tree::showPathInfo();
-                    return Tree::path;
+                    pathtrace(*currentchild);
+                    showPathInfo();
+                    return path;
                 }
-                
-                if(!(Tree::contains(Tree::frontier,*currentchild) || Tree::contains(Tree::explored,*currentchild)))
+                if(!contain(nexplored,currentchild->id))
                 {
-                    Tree::frontier.push_back(currentchild);
+                    if(!contain(nfrontier,currentchild->id))
+                    {
+                        std::cout << "contains\n";
+                        frontier.push_back(currentchild);
+                        nfrontier.push_back(currentchild->id);
+                    }
                 }
-                
             }
         }         
     }
-    return Tree::path;
+    return path;
 }
 

@@ -1,42 +1,31 @@
 #include "node.h"
+#include <bits/stdc++.h>
 
 Node::Node(std::vector<int> _puzzle,std::string _action):action{_action}
 {
-    // std::cout << "node constructor" << "\n";
     setValue(_puzzle);
+    id = setid(puzzle);
 }
 
 void Node::setValue(std::vector<int> _puzzle)
 {
-    // std::cout << "set value..." << "\n";
-    for(int i{};i<size;i++)
+    for(int i{};i<9;i++)
     {
         this->puzzle.push_back(_puzzle[i]);
     }
-    // std::cout << "end set value\n";
 }
 
 Node::Node(const Node& node)
 {
-    // std::cout <<"node copy constructor\n";
     parent = {};
     if(node.parent.size())
         parent.push_back(node.parent[0]);
-    children={};  
-    puzzle={};          
-    for(int i{};i<size;i++)
-    {
-        puzzle.push_back(node.puzzle[i]);
-    }
-    for(size_t i{};i<children.size();i++)
-    {
-        children.push_back(node.children[i]);
-    }
+    children=node.children;  
+    puzzle=node.puzzle;          
     ind0 = node.ind0;
-    col = node.col;
-    size = node.size;
     action = node.action;
     heuristic = node.heuristic;
+    id = node.id;
 }
 
 Node::Node(const Node* node)
@@ -44,47 +33,32 @@ Node::Node(const Node* node)
     parent = {};
     if(node->parent.size())
         parent.push_back(node->parent[0]);
-    children={};  
-    puzzle={};          
-    for(int i{};i<size;i++)
-    {
-        puzzle.push_back(node->puzzle[i]);
-    }
-    for(size_t i{};i<children.size();i++)
-    {
-        children.push_back(node->children[i]);
-    }
+    children=node->children;  
+    puzzle=node->puzzle;         
     ind0 = node->ind0;
-    col = node->col;
-    size = node->size;
     action = node->action;
     heuristic = node->heuristic;
-
+    id = node->id;
 }
 
 bool Node::Test(std::vector<int> goalarray)
 {
-    std::cout << "in test " << puzzle[2] << " " << goalarray[1] << "\n";
-    for(int i{};i<size;i++)
-    {
-        std::cout << puzzle[i] << " * " << goalarray[i] << "\n";
-        if(puzzle[i] != goalarray[i])
-        {
-            return false;
-        }
-    }
-    return true;        
+    int goalid = setid(goalarray);
+    if(id==goalid)
+        return true;
+    return false;   
 }
 
 void Node::right(std::vector<int> _puzzle,int ind0)
 {
     // std::cout << "right move\n";
-    if(ind0 % col < col-1)
+    if(ind0 % 3 < 2)
     {
         std::vector<int> mid_values = _puzzle;
         std::swap(mid_values[ind0+1],mid_values[ind0]);
         std::string s = "move right";
         Node childd(mid_values);
+        childd.setid(mid_values);
         auto child = std::make_shared<Node>(childd);
         if(!child->parent.size())
             child->parent.push_back(std::make_shared<Node>(this));
@@ -98,12 +72,13 @@ void Node::right(std::vector<int> _puzzle,int ind0)
 void Node::left(std::vector<int> _puzzle,int ind0)
 {
     // std::cout << "left move\n";
-    if(ind0 % col > 0)
+    if(ind0 % 3 > 0)
     {
         std::vector<int> mid_values = _puzzle;
         std::swap(mid_values[ind0-1],mid_values[ind0]);
         std::string s = "move left";
         Node childd(mid_values);
+        childd.setid(mid_values);
         auto child = std::make_shared<Node>(childd);
         if(!child->parent.size())
             child->parent.push_back(std::make_shared<Node>(this));
@@ -117,12 +92,13 @@ void Node::left(std::vector<int> _puzzle,int ind0)
 void Node::up(std::vector<int> _puzzle,int ind0)
 {
     // std::cout << "up move\n";
-    if(ind0 - col >= 0)
+    if(ind0 - 3 >= 0)
     {
         std::vector<int> mid_values = _puzzle;
-        std::swap(mid_values[ind0-col],mid_values[ind0]);
+        std::swap(mid_values[ind0-3],mid_values[ind0]);
         std::string s = "move up";
         Node childd(mid_values);
+        childd.setid(mid_values);
         auto child = std::make_shared<Node>(childd);
         if(!child->parent.size())
             child->parent.push_back(std::make_shared<Node>(*this));
@@ -136,12 +112,13 @@ void Node::up(std::vector<int> _puzzle,int ind0)
 void Node::down(std::vector<int> _puzzle,int ind0)
 {
     // std::cout << "down move\n";
-    if(ind0 + col < col*col)
+    if(ind0 + 3 < 9)
     {
         std::vector<int> mid_values = _puzzle;
-        std::swap(mid_values[ind0+col],mid_values[ind0]);
+        std::swap(mid_values[ind0+3],mid_values[ind0]);
         std::string s = "move down";
         Node childd(mid_values);
+        childd.setid(mid_values);
         auto child = std::make_shared<Node>(childd);
         if(!child->parent.size())
             child->parent.push_back(std::make_shared<Node>(this));
@@ -156,13 +133,13 @@ void Node::show()
 {
     int m = 0;
     std::cout << "+-------+\n";
-    for(int i{};i<col;i++)
+    for(int i{};i<3;i++)
     {
         std::cout << "| ";
         std::cout << LIGHTGRAY_B ;
-        for(int j{};j<col;j++)
+        for(int j{};j<3;j++)
         {
-            if( j == col-1)
+            if( j == 2)
                 std::cout << BOLD << LIGHTMAGENTA << puzzle[m] << RESET;
             else
                 std::cout << BOLD << LIGHTMAGENTA << puzzle[m] << " ";
@@ -173,28 +150,16 @@ void Node::show()
     std::cout << "+-------+\n";
 }
 
-bool Node::sameNode(std::vector<int> _puzzle)
-{
-    for(int i{};i<size;i++)
-    {
-        if(puzzle[i] != _puzzle[i])
-        {
-            return false;
-        }
-    }
-    return true;
-}
-
 void Node::generate()
 {
-    // std::cout << "entrance of generator " << puzzle.size() << "\n";
-    for(size_t i{};i<puzzle.size();i++)
+    auto it = std::find(puzzle.begin(), puzzle.end(), 0);
+    if (it != puzzle.end()) 
     {
-        if(puzzle[i]==0)
-        {
-            ind0 = i;
-            break;
-        }
+        ind0 = it - puzzle.begin();
+    }
+    else 
+    {
+        std::cout << "-1" << std::endl;
     }
     right(puzzle,ind0);
     left(puzzle,ind0);
@@ -206,9 +171,7 @@ bool Node::operator==(Node node)
 {
     if(puzzle==node.puzzle)
     {
-        if(parent.size() && node.parent.size())
-            if(parent[0]->puzzle == node.parent[0]->puzzle)
-                return true;                
+        return true;                
     }
     return false;
 }
@@ -225,7 +188,7 @@ bool Node::operator!=(Node node)
 int Node::findHeu(std::vector<int> goalarray)
 {
     heuristic=0;
-    for(int i{};i<size;i++)
+    for(int i{};i<9;i++)
     {
         if(puzzle[i] != goalarray[i])
         {
