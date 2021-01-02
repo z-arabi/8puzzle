@@ -56,11 +56,17 @@ int main()
     // std::vector<std::shared_ptr<Node>> solution = bfs.Solve();
 
     /* solvable - bfs can't*/
-    std::vector<int> s0{8,7,4,6,5,1,3,0,2};
+    // std::vector<int> s0{8,7,4,6,5,1,3,0,2};
+    // Node root{s0};
+    // BFS bfs{root};
+    // std::vector<std::shared_ptr<Node>> solution = bfs.Solve();
+
+    /* solvable - bfs can't*/
+    std::vector<int> s0{0,8,7,6,5,4,3,2,1};
     Node root{s0};
     BFS bfs{root};
     std::vector<std::shared_ptr<Node>> solution = bfs.Solve();
-
+   
     /* Test4 */
     // std::vector<int> s0{1,2,3,4,5,6,7,8,0};
     // Node root{s0};
