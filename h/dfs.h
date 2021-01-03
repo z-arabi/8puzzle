@@ -1,20 +1,40 @@
-// #ifndef DFS_H
-// #define DFS_H
+#ifndef DFS_H
+#define DFS_H
 
-// #include "tree.h"
-// #include "node.h"
-// #include "color.h"
+#include "node.h"
+#include "color.h"
 
-// class DFS: public Tree
-// {
-//     public:
-//         int limit{};
-//         int depth{};
-//         int test;
+class DFS
+{
+    private:
+        Node root;
+        std::vector<std::shared_ptr<Node>> path{};
+        std::vector<std::shared_ptr<Node>> frontier{};
+        std::vector<std::shared_ptr<Node>> explored{};
+        std::vector<int> nfrontier{};
+        std::vector<int> nexplored{};
+        std::vector<std::shared_ptr<Node>> actions{};
+        std::vector<int> goalpuzzle{1,2,3,4,5,6,7,8,0};
+        std::vector<int> goal{1,2,3,4,5,6,7,8,0};
+        
+        int limit{};
+        int depth{};
+        int test;
 
-//         DFS(Node _root,int _limit,std::vector<int> _goalpuzzle={1,2,3,4,5,6,7,8,0});
-//         ~DFS(){};
-//         std::deque<Node> Solve();
-//         bool recDLS(Node node,int l,int d);
-// };
-// #endif
+    public:
+        DFS(Node _root,std::vector<int> _goalpuzzle={1,2,3,4,5,6,7,8,0});
+        ~DFS(){};
+        std::vector<std::shared_ptr<Node>> SolveDLS(int _limit);
+        std::vector<std::shared_ptr<Node>> SolveIDS();
+        bool recDLS(std::shared_ptr<Node> node,int l);
+
+        bool contains(std::vector<int> l,int idp);
+        void pathtrace(Node n);
+        void showPathInfo();
+        int getInvCount(std::vector<int> p);
+        bool isSolvable(std::vector<int> _puzzle);
+
+        
+};
+
+#endif

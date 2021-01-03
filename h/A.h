@@ -1,17 +1,33 @@
-// #ifndef A_H
-// #define A_H
+#ifndef A_H
+#define A_H
 
-// #include "node.h"
-// #include "tree.h"
+#include "node.h"
+#include <bits/stdc++.h>
 
-// class A:public Tree 
-// {
-//     public:
-//         A(Node _root,std::vector<int> _goalpuzzle={1,2,3,4,5,6,7,8,0});
-//         ~A(){}
-//         std::deque<Node> Solve();
+class A
+{
+    private:
+         private:
+        Node root;
+        std::vector<std::shared_ptr<Node>> path{};
+        std::vector<std::shared_ptr<Node>> frontier{};
+        std::vector<int> nfrontier{};
+        std::vector<int> nexplored{};
+        std::vector<std::shared_ptr<Node>> actions{};
+        std::vector<int> goalpuzzle{};
+
+    public:
+        A(Node _root,std::vector<int> _goalpuzzle={1,2,3,4,5,6,7,8,0});
+        ~A(){}
+        std::vector<std::shared_ptr<Node>> Solve();
+
+        bool contains(std::vector<int> l,int idp);
+        void pathtrace(Node n);
+        void showPathInfo();
+        int getInvCount(std::vector<int> p);
+        bool isSolvable(std::vector<int> _puzzle);
 
 
-// };
+};
 
-// #endif
+#endif

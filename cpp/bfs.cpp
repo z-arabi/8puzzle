@@ -2,7 +2,6 @@
 
 BFS::BFS(Node _root,std::vector<int> _goalpuzzle)
 {
-    std::cout << "bfs constructor" << "\n";
     root=_root;
     goalpuzzle=_goalpuzzle;
 }
@@ -12,6 +11,8 @@ std::vector<std::shared_ptr<Node>> BFS::Solve()
     path={};
     actions={};
     frontier={};
+    nfrontier={};
+    nexplored={};
     std::vector<int> goal{1,2,3,4,5,6,7,8,0};
 
     if(root.Test(goalpuzzle))
@@ -31,8 +32,7 @@ std::vector<std::shared_ptr<Node>> BFS::Solve()
         while(frontier.size() > 0)
         {
             std::shared_ptr<Node> currentNode = frontier.front();
-            int out = nfrontier.front();
-            nexplored.push_back(out);
+            nexplored.push_back(nfrontier.front());
             frontier.erase(frontier.begin());
             nfrontier.erase(nfrontier.begin());
             currentNode->generate();
@@ -52,7 +52,6 @@ std::vector<std::shared_ptr<Node>> BFS::Solve()
                 {
                     if(!contains(nfrontier,currentchild->id))
                     {
-                        std::cout << "not contains\n";
                         frontier.push_back(currentchild);
                         nfrontier.push_back(currentchild->id);
                     }

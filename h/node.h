@@ -17,6 +17,7 @@ class Node
         std::vector<std::shared_ptr<Node>> parent{};
         int ind0{};
         int heuristic{};
+        int depth{};
 
         Node(){}
         Node(std::vector<int> _puzzle,std::string _action="");
@@ -33,13 +34,11 @@ class Node
         void generate();
         bool operator==(Node node);
         bool operator!=(Node node);
+        bool operator==(std::shared_ptr<Node> node);
         int findHeu(std::vector<int> goalarray={1,2,3,4,5,6,7,8,0});
 
-        int setid(std::vector<int> p){
-            int c = (p[0]*100000000)+(p[1]*10000000)+(p[2]*1000000)+(p[3]*100000)+(p[4]*10000)+(p[5]*1000)+(p[6]*100)+(p[7]*10)+p[8];
-            return c;
-        }
+        int setid(std::vector<int> p);
         int id{};
+        friend bool operator==(const std::shared_ptr<Node> &a , const std::shared_ptr<Node> &b){return a->id == b->id;}       
 };
-
 #endif

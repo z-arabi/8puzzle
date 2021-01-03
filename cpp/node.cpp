@@ -1,5 +1,6 @@
 #include "node.h"
 #include <bits/stdc++.h>
+#include <cmath>
 
 Node::Node(std::vector<int> _puzzle,std::string _action):action{_action}
 {
@@ -26,6 +27,7 @@ Node::Node(const Node& node)
     action = node.action;
     heuristic = node.heuristic;
     id = node.id;
+    depth=node.depth;
 }
 
 Node::Node(const Node* node)
@@ -39,6 +41,7 @@ Node::Node(const Node* node)
     action = node->action;
     heuristic = node->heuristic;
     id = node->id;
+    depth=node->depth;
 }
 
 bool Node::Test(std::vector<int> goalarray)
@@ -59,6 +62,7 @@ void Node::right(std::vector<int> _puzzle,int ind0)
         std::string s = "move right";
         Node childd(mid_values);
         childd.setid(mid_values);
+        childd.depth = depth+1;
         auto child = std::make_shared<Node>(childd);
         if(!child->parent.size())
             child->parent.push_back(std::make_shared<Node>(this));
@@ -79,6 +83,7 @@ void Node::left(std::vector<int> _puzzle,int ind0)
         std::string s = "move left";
         Node childd(mid_values);
         childd.setid(mid_values);
+        childd.depth = depth+1;
         auto child = std::make_shared<Node>(childd);
         if(!child->parent.size())
             child->parent.push_back(std::make_shared<Node>(this));
@@ -99,6 +104,7 @@ void Node::up(std::vector<int> _puzzle,int ind0)
         std::string s = "move up";
         Node childd(mid_values);
         childd.setid(mid_values);
+        childd.depth = depth+1;
         auto child = std::make_shared<Node>(childd);
         if(!child->parent.size())
             child->parent.push_back(std::make_shared<Node>(*this));
@@ -119,6 +125,7 @@ void Node::down(std::vector<int> _puzzle,int ind0)
         std::string s = "move down";
         Node childd(mid_values);
         childd.setid(mid_values);
+        childd.depth = depth+1;
         auto child = std::make_shared<Node>(childd);
         if(!child->parent.size())
             child->parent.push_back(std::make_shared<Node>(this));
@@ -176,6 +183,16 @@ bool Node::operator==(Node node)
     return false;
 }
 
+bool Node::operator==(std::shared_ptr<Node> node)
+{
+    std::cout << "calls this";
+    if(puzzle==node->puzzle)
+    {
+        return true;                
+    }
+    return false;
+}
+
 bool Node::operator!=(Node node)
 {
     if(*this==node)
@@ -192,8 +209,14 @@ int Node::findHeu(std::vector<int> goalarray)
     {
         if(puzzle[i] != goalarray[i])
         {
-            heuristic++;
+            heuristic ++;
         }
     }
     return heuristic;
+}
+
+int Node::setid(std::vector<int> p)
+{
+    int c = (p[0]*100000000)+(p[1]*10000000)+(p[2]*1000000)+(p[3]*100000)+(p[4]*10000)+(p[5]*1000)+(p[6]*100)+(p[7]*10)+p[8];
+    return c;
 }
