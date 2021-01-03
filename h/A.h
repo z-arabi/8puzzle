@@ -24,9 +24,6 @@ class A
         bool contains(std::vector<int> l,int idp);
         void pathtrace(Node n);
         void showPathInfo();
-        int getInvCount(std::vector<int> p);
-        bool isSolvable(std::vector<int> _puzzle);
-
 
 };
 

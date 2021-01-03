@@ -5,15 +5,16 @@
 Node::Node(std::vector<int> _puzzle,std::string _action):action{_action}
 {
     setValue(_puzzle);
-    id = setid(puzzle);
 }
 
 void Node::setValue(std::vector<int> _puzzle)
 {
+    puzzle = {};
     for(int i{};i<9;i++)
     {
         this->puzzle.push_back(_puzzle[i]);
     }
+    id = setid(puzzle);
 }
 
 Node::Node(const Node& node)
@@ -219,4 +220,20 @@ int Node::setid(std::vector<int> p)
 {
     int c = (p[0]*100000000)+(p[1]*10000000)+(p[2]*1000000)+(p[3]*100000)+(p[4]*10000)+(p[5]*1000)+(p[6]*100)+(p[7]*10)+p[8];
     return c;
+}
+
+int Node::getInvCount(std::vector<int> p)
+{
+    int inv_count = 0;
+    for (int i = 0; i < 8; i++) 
+        for (int j = i+1; j < 9; j++)
+            if (p[j] && p[i] &&  p[i] > p[j]) 
+                inv_count++;
+    return inv_count;
+}    
+
+bool Node::isSolvable()
+{
+    int invCount = getInvCount(puzzle);
+    return (invCount%2 == 0); 
 }

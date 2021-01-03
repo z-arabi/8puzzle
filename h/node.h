@@ -7,11 +7,12 @@
 #include <string>
 #include "color.h"
 #include <memory>
+#include <bits/stdc++.h> 
 
 class Node
 {
     public:
-        std::vector<int> puzzle;
+        std::vector<int> puzzle{0,0,0,0,0,0,0,0,0};
         std::vector<std::shared_ptr<Node>> children{};
         std::string action{};
         std::vector<std::shared_ptr<Node>> parent{};
@@ -39,6 +40,9 @@ class Node
 
         int setid(std::vector<int> p);
         int id{};
-        friend bool operator==(const std::shared_ptr<Node> &a , const std::shared_ptr<Node> &b){return a->id == b->id;}       
+        friend bool operator==(const std::shared_ptr<Node> &a , const std::shared_ptr<Node> &b){ return a->id == b->id; }       
+        int getInvCount(std::vector<int> p);
+        bool isSolvable();
+
 };
 #endif

@@ -19,11 +19,12 @@ std::vector<std::shared_ptr<Node>> BFS::Solve()
     {
         std::cout << GREEN_B << "Primary State is Final State. Primary state is:" << RESET << "\n";
         root.show();
-        return {};
+        return {std::make_shared<Node>(root)};
     }
-    else if(!isSolvable(root.puzzle) && goalpuzzle==goal)
+    else if(!root.isSolvable() && goalpuzzle==goal)
     {
         std::cout << LIGHTCYAN_B << BOLD << RED << "it has no solution" << RESET << "\n";
+        return {};
     }
     else
     {
@@ -43,7 +44,7 @@ std::vector<std::shared_ptr<Node>> BFS::Solve()
                 currentchild = currentNode->children[i];
                 if(currentchild->Test(goalpuzzle))
                 {
-                    std::cout << "Goal found\n";
+                    std::cout << BOLD << GREEN << "Goal found" << RESET << "\n";
                     pathtrace(*currentchild);
                     showPathInfo();
                     return path;
@@ -59,7 +60,7 @@ std::vector<std::shared_ptr<Node>> BFS::Solve()
             }
         }         
     }
-    return path;
+    return {};
 }
 
 bool BFS::contains(std::vector<int> l,int idp)
@@ -85,7 +86,6 @@ void BFS::pathtrace(Node n)
         path.push_back(current);
     }
     std::reverse(path.begin(),path.end());
-    std::cout << GREEN << "The Depth is..." << path.size() << RESET << "\n";
 }
 
 void BFS::showPathInfo()
@@ -98,20 +98,5 @@ void BFS::showPathInfo()
             std::cout << MAGENTA << path[i]->action << " =>" << RESET << "\n";
         path[i]->show();
     }
-}
-
-int BFS::getInvCount(std::vector<int> p)
-{
-    int inv_count = 0;
-    for (int i = 0; i < 8; i++) 
-        for (int j = i+1; j < 9; j++)
-            if (p[j] && p[i] &&  p[i] > p[j]) 
-                inv_count++;
-    return inv_count;
-}    
-
-bool BFS::isSolvable(std::vector<int> _puzzle)
-{
-    int invCount = getInvCount(_puzzle);
-    return (invCount%2 == 0); 
+    std::cout << BOLD << GREEN << "The Depth is..." << path.size()-1 << RESET << "\n";
 }

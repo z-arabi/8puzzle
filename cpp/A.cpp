@@ -22,7 +22,7 @@ std::vector<std::shared_ptr<Node>> A::Solve()
         root.show();
         return {};
     }
-    else if(!isSolvable(root.puzzle) && goalpuzzle==goal)
+    else if(!root.isSolvable() && goalpuzzle==goal)
     {
         std::cout << LIGHTCYAN_B << BOLD << RED << "it has no solution" << RESET << "\n";
     }
@@ -115,7 +115,7 @@ void A::pathtrace(Node n)
         path.push_back(current);
     }
     std::reverse(path.begin(),path.end());
-    std::cout << GREEN << "The Depth is..." << path.size() << RESET << "\n";
+    std::cout << GREEN << "The Depth is..." << path.size()-1 << RESET << "\n";
 }
 
 void A::showPathInfo()
@@ -129,19 +129,3 @@ void A::showPathInfo()
         path[i]->show();
     }
 }
-
-int A::getInvCount(std::vector<int> p)
-{
-    int inv_count = 0;
-    for (int i = 0; i < 8; i++) 
-        for (int j = i+1; j < 9; j++)
-            if (p[j] && p[i] &&  p[i] > p[j]) 
-                inv_count++;
-    return inv_count;
-}    
-
-bool A::isSolvable(std::vector<int> _puzzle)
-{
-    int invCount = getInvCount(_puzzle);
-    return (invCount%2 == 0); 
-}  
