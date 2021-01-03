@@ -26,26 +26,20 @@ std::vector<std::shared_ptr<Node>> DFS::SolveDLS(int _limit)
  
 bool DFS::recDLS(std::shared_ptr<Node> node,int l)
 {
-    // std::cout << l << " limit when entering-----------------\n";
-    // node->show();
     std::shared_ptr<Node> currentNode;
     if(node->Test(goalpuzzle))
     {
         std::cout << "Goal found\n";
-        // std::cout << node->depth << "depth of last node \n";
         pathtrace(*node);
         showPathInfo();
-        
         return true;
     }
     else if(!node->isSolvable() && goalpuzzle==goal)
     {
-        std::cout << LIGHTCYAN_B << BOLD << RED << "it has no solution" << RESET << "\n";
         return false;
     }
     else if(l<=0)
     {
-        // std::cout << RED << "cut-off occured" << RESET << "\n";
         if(frontier.size()>1)
         {
             explored.push_back(frontier.back());
@@ -57,27 +51,21 @@ bool DFS::recDLS(std::shared_ptr<Node> node,int l)
     }
     else if(frontier.empty())
     {
-        // std::cout << "reach to the end\n";
         return false;
     }
     else
     {
-        // std::cout << frontier.size() << " " << explored.size() << " initial check\n";
         currentNode = frontier.back();
         explored.push_back(frontier.back());
         nexplored.push_back(frontier.back()->id);
         frontier.pop_back();
         nfrontier.pop_back();
-        // std::cout << frontier.size() << " " << explored.size() << " second check check\n";
         currentNode->generate();
         std::shared_ptr<Node> currentchild;
-        // std::cout << currentNode->children.size() << " number of children\n";
 
         for(size_t i{};i<currentNode->children.size();i++)
         {
-            // std::cout << currentNode->depth << " " << currentNode->children[i]->depth  << " in childerns\n";
             currentchild = currentNode->children[i];
-            // currentchild->show();
             if(currentchild->Test(goalpuzzle))
             {
                 std::cout << "Goal found\n";
@@ -87,23 +75,16 @@ bool DFS::recDLS(std::shared_ptr<Node> node,int l)
             }
             if(!contains(nexplored,currentchild->id))
             {
-                // std::cout << "not in explored\n";
                 if(!contains(nfrontier,currentchild->id))
                 {
-                    // std::cout << "not in frontier => added to frontier\n";
                     frontier.push_back(currentchild);
                     nfrontier.push_back(currentchild->id);
-
                 }
                 else
                 {
-                    // std::cout << explored.size() << "in frontier\n";
                     std::vector<std::shared_ptr<Node>>::iterator it_fr = std::find(frontier.begin(),frontier.end(),currentchild);
-                    // std::cout << "in front\n";
-                    // (*it_fr)->show();
                     if((*it_fr)->depth < currentchild->depth)
                     {
-                        // std::cout << "replaced in front\n";
                         frontier.push_back(currentchild);
                         nfrontier.push_back(currentchild->id);
                     }
@@ -111,14 +92,10 @@ bool DFS::recDLS(std::shared_ptr<Node> node,int l)
             }
             else
             {
-                // std::cout << explored.size() << "in explored\n";
                 std::vector<std::shared_ptr<Node>>::iterator it_ex = std::find(explored.begin(),explored.end(),currentchild);
-                // std::cout << "in back\n";
-                // (*it_ex)->show();
                 if((*it_ex)->depth > currentchild->depth)
                 {
                     std::vector<int>::iterator it_nex = std::find(nexplored.begin(),nexplored.end(),currentchild->id);
-                    // std::cout << "replaced in back\n";
                     frontier.push_back(currentchild);
                     nfrontier.push_back(currentchild->id);
                     explored.erase(it_ex);
@@ -126,14 +103,11 @@ bool DFS::recDLS(std::shared_ptr<Node> node,int l)
                 }
             }
         }
-        // std::cout << "check5\n";
         std::reverse(currentNode->children.begin(),currentNode->children.end());
         for(size_t i{};i<currentNode->children.size();i++)
         {
-            // currentNode->children[i]->show();
             if(contains(nfrontier,currentNode->children[i]->id))
             {
-                // std::cout << "check8\n";
                 bool outcome = recDLS(currentNode->children[i],l-1);
                 if(outcome)
                     return true;
@@ -145,12 +119,11 @@ bool DFS::recDLS(std::shared_ptr<Node> node,int l)
 
 std::vector<std::shared_ptr<Node>> DFS::SolveIDS()
 {
-    for (int i{};i<1000;i++)
+    for (int i{};i<5000;i++)
     {
         std::vector<std::shared_ptr<Node>>  result = SolveDLS(i);
         if (!result.empty())
             {
-                std::cout << i << "\n";
                 return path;
             }
     }

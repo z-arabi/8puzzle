@@ -13,7 +13,6 @@ std::vector<std::shared_ptr<Node>> BFS::Solve()
     frontier={};
     nfrontier={};
     nexplored={};
-    std::vector<int> goal{1,2,3,4,5,6,7,8,0};
 
     if(root.Test(goalpuzzle))
     {
@@ -23,22 +22,22 @@ std::vector<std::shared_ptr<Node>> BFS::Solve()
     }
     else if(!root.isSolvable() && goalpuzzle==goal)
     {
-        std::cout << LIGHTCYAN_B << BOLD << RED << "it has no solution" << RESET << "\n";
         return {};
     }
     else
     {
         frontier.push_back(std::make_shared<Node>(root));
         nfrontier.push_back(root.id);
+        std::shared_ptr<Node> currentNode;
+        std::shared_ptr<Node> currentchild;
         while(frontier.size() > 0)
         {
-            std::shared_ptr<Node> currentNode = frontier.front();
+            currentNode = frontier.front();
             nexplored.push_back(nfrontier.front());
             frontier.erase(frontier.begin());
             nfrontier.erase(nfrontier.begin());
             currentNode->generate();
-            std::shared_ptr<Node> currentchild;
-                
+                            
             for(size_t i{};i<currentNode->children.size();i++)
             {
                 currentchild = currentNode->children[i];

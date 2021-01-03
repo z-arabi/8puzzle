@@ -1,18 +1,16 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <iostream> 
-#include <deque>
+#include <iostream>
 #include <vector>
 #include <string>
-#include "color.h"
 #include <memory>
-#include <bits/stdc++.h> 
+#include "color.h"
 
 class Node
 {
     public:
-        std::vector<int> puzzle{0,0,0,0,0,0,0,0,0};
+        std::vector<int> puzzle{};
         std::vector<std::shared_ptr<Node>> children{};
         std::string action{};
         std::vector<std::shared_ptr<Node>> parent{};

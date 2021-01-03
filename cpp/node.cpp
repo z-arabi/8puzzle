@@ -55,7 +55,6 @@ bool Node::Test(std::vector<int> goalarray)
 
 void Node::right(std::vector<int> _puzzle,int ind0)
 {
-    // std::cout << "right move\n";
     if(ind0 % 3 < 2)
     {
         std::vector<int> mid_values = _puzzle;
@@ -76,7 +75,6 @@ void Node::right(std::vector<int> _puzzle,int ind0)
 
 void Node::left(std::vector<int> _puzzle,int ind0)
 {
-    // std::cout << "left move\n";
     if(ind0 % 3 > 0)
     {
         std::vector<int> mid_values = _puzzle;
@@ -97,7 +95,6 @@ void Node::left(std::vector<int> _puzzle,int ind0)
 
 void Node::up(std::vector<int> _puzzle,int ind0)
 {
-    // std::cout << "up move\n";
     if(ind0 - 3 >= 0)
     {
         std::vector<int> mid_values = _puzzle;
@@ -118,7 +115,6 @@ void Node::up(std::vector<int> _puzzle,int ind0)
 
 void Node::down(std::vector<int> _puzzle,int ind0)
 {
-    // std::cout << "down move\n";
     if(ind0 + 3 < 9)
     {
         std::vector<int> mid_values = _puzzle;
@@ -186,7 +182,6 @@ bool Node::operator==(Node node)
 
 bool Node::operator==(std::shared_ptr<Node> node)
 {
-    std::cout << "calls this";
     if(puzzle==node->puzzle)
     {
         return true;                

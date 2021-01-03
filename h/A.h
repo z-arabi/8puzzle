@@ -7,7 +7,6 @@
 class A
 {
     private:
-         private:
         Node root;
         std::vector<std::shared_ptr<Node>> path{};
         std::vector<std::shared_ptr<Node>> frontier{};
@@ -15,6 +14,7 @@ class A
         std::vector<int> nexplored{};
         std::vector<std::shared_ptr<Node>> actions{};
         std::vector<int> goalpuzzle{};
+        std::vector<int> goal{1,2,3,4,5,6,7,8,0};
 
     public:
         A(Node _root,std::vector<int> _goalpuzzle={1,2,3,4,5,6,7,8,0});

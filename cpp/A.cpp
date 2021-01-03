@@ -20,11 +20,11 @@ std::vector<std::shared_ptr<Node>> A::Solve()
     {
         std::cout << GREEN_B << "Primary State is Final State. Primary state is:" << RESET << "\n";
         root.show();
-        return {};
+        return {std::make_shared<Node>(root)};
     }
     else if(!root.isSolvable() && goalpuzzle==goal)
     {
-        std::cout << LIGHTCYAN_B << BOLD << RED << "it has no solution" << RESET << "\n";
+        return {};
     }
     else
     {
@@ -33,11 +33,8 @@ std::vector<std::shared_ptr<Node>> A::Solve()
         frontier.push_back(std::make_shared<Node>(root));
         nfrontier.push_back(root.id);
         nexplored.push_back(root.id);
-        int c = 0;
         while(frontier.size() > 0 )
         {
-            c++;
-            std::cout << "inwhile\n";
             std::shared_ptr<Node> currentNode = frontier.front();
             int min{frontier[0]->heuristic};
             int idd{frontier[0]->id};
@@ -45,20 +42,17 @@ std::vector<std::shared_ptr<Node>> A::Solve()
             std::vector<std::shared_ptr<Node>>::iterator ind = i;
             
             while (i != frontier.end()) 
-            { 
-                // std::cout << min << " " << (*i)->heuristic << " " << c <<"\n";
+            {
                 if (min > (*i)->heuristic)
                 {
                     min = (*i)->heuristic;
                     currentNode = *i;
                     ind = i;
                     idd = (*ind)->id;
-                    std::cout << idd << " min changed\n";
                 }   
                 i++;         
             }
             std::vector<int>::iterator itr = std::find(nfrontier.begin(),nfrontier.end(),idd);
-            // std::cout << *itr << " iterator number\n";
             nexplored.push_back(idd);
             frontier.erase(ind);
             nfrontier.erase(itr);
@@ -96,7 +90,6 @@ bool A::contains(std::vector<int> l,int idp)
     auto it = std::find(l.begin(), l.end(), idp);
     if (it != l.end()) 
     {
-        // std::cout << *it << "contains\n";
         return true;
     }
     return false;
@@ -115,7 +108,6 @@ void A::pathtrace(Node n)
         path.push_back(current);
     }
     std::reverse(path.begin(),path.end());
-    std::cout << GREEN << "The Depth is..." << path.size()-1 << RESET << "\n";
 }
 
 void A::showPathInfo()
@@ -128,4 +120,5 @@ void A::showPathInfo()
             std::cout << MAGENTA << path[i]->action << " =>" << RESET << "\n";
         path[i]->show();
     }
+    std::cout << BOLD << GREEN << "The Depth is..." << path.size()-1 << RESET << "\n";
 }
