@@ -67,7 +67,7 @@ std::vector<std::shared_ptr<Node>> A::Solve()
                 currentchild = currentNode->children[i];
                 if(currentchild->Test(goalpuzzle))
                 {
-                    std::cout << "Goal found\n";
+                    std::cout << BOLD << GREEN << "Goal found" << RESET << "\n";
                     pathtrace(*currentchild);
                     showPathInfo();
                     return path;

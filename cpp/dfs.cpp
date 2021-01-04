@@ -29,7 +29,7 @@ bool DFS::recDLS(std::shared_ptr<Node> node,int l)
     std::shared_ptr<Node> currentNode;
     if(node->Test(goalpuzzle))
     {
-        std::cout << "Goal found\n";
+        std::cout << BOLD << GREEN << "Goal found" << RESET << "\n";
         pathtrace(*node);
         showPathInfo();
         return true;
