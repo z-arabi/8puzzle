@@ -201,13 +201,14 @@ bool Node::operator!=(Node node)
 int Node::findHeu(std::vector<int> goalarray)
 {
     heuristic=0;
-    for(int i{};i<9;i++)
+    for(int i{};i<9;i++ && puzzle[i] !=0)
     {
-        if(puzzle[i] != goalarray[i])
+        if(puzzle[i] != goalarray[i] )
         {
             heuristic ++;
         }
     }
+    heuristic += depth;
     return heuristic;
 }
 

@@ -106,7 +106,7 @@ void solvePuzzle(std::vector<int> puzzle0,std::vector<int> goalpuzzle,Node root)
     if(ch=='a')
     {
         BFS bfs{root,goalpuzzle};
-        std::cout << "It will be solved in a second...\n";
+        std::cout << "It will be solved in seconds...\n";
         solution = bfs.Solve();
         if(!solution.size())
             std::cout << BOLD << RED << "It has no solution" << RESET << "\n";

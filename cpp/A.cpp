@@ -13,6 +13,7 @@ std::vector<std::shared_ptr<Node>> A::Solve()
     actions={};
     frontier={};
     nfrontier={};
+    explored={};
     nexplored={};
     std::vector<int> goal{1,2,3,4,5,6,7,8,0};
 
@@ -53,6 +54,7 @@ std::vector<std::shared_ptr<Node>> A::Solve()
                 i++;         
             }
             std::vector<int>::iterator itr = std::find(nfrontier.begin(),nfrontier.end(),idd);
+            explored.push_back(*ind);
             nexplored.push_back(idd);
             frontier.erase(ind);
             nfrontier.erase(itr);
@@ -77,7 +79,31 @@ std::vector<std::shared_ptr<Node>> A::Solve()
                         frontier.push_back(currentchild);
                         nfrontier.push_back(currentchild->id);
                     }
+                     else
+                    {
+                        std::vector<std::shared_ptr<Node>>::iterator it_fr = std::find(frontier.begin(),frontier.end(),currentchild);
+                        std::vector<int>::iterator it_nfr = std::find(nfrontier.begin(),nfrontier.end(),currentchild->id);
+                        if((*it_fr)->heuristic > currentchild->heuristic)
+                        {
+                            frontier.erase(it_fr);
+                            nfrontier.erase(it_nfr);
+                            frontier.push_back(currentchild);
+                            nfrontier.push_back(currentchild->id);
+                        }
+                    }
                 }  
+                else
+                {
+                    std::vector<std::shared_ptr<Node>>::iterator it_ex = std::find(explored.begin(),explored.end(),currentchild);
+                    if((*it_ex)->heuristic > currentchild->heuristic)
+                    {
+                        std::vector<int>::iterator it_nex = std::find(nexplored.begin(),nexplored.end(),currentchild->id);
+                        frontier.push_back(currentchild);
+                        nfrontier.push_back(currentchild->id);
+                        explored.erase(it_ex);
+                        nexplored.erase(it_nex);
+                    }
+                }
             }
         }         
     }
